@@ -1,24 +1,29 @@
-const express = require("express");
-const mysql = require("mysql2/promise");
-require("dotenv").config();
+//include the required packages
+const express = require('express');
+const mysql = require('mysql2/promise');
+require('dotenv').config();
 const port = 3000;
 
+//database config info
 const dbConfig = {
     host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
     waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
+    connectionLimit: 100,
+    queueLimit: 0,
 };
 
+//initialize express app
 const app = express();
+//helps app read json
 app.use(express.json());
 
+//start the server
 app.listen(port, () => {
-    console.log('Server is running on port ${port}');
+    console.log('Server is running on port',port);
 });
 
 app.get('/allperfumes', async (req, res) => {
@@ -28,7 +33,7 @@ app.get('/allperfumes', async (req, res) => {
     res.json(rows);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Server errorz for allperfumes' });
+    res.status(500).json({ message: 'Server error for allperfumes' });
   }
 });
 
