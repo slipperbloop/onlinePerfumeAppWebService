@@ -112,14 +112,3 @@ app.delete('/deleteperfume', async (req, res) => {
     res.status(500).json({ message: 'Server error - could not delete perfume id ' + id });
   }
 });
-
-app.get('/dbtest', async (req, res) => {
-  try {
-    let connection = await mysql.createConnection(dbConfig);
-    const [rows] = await connection.execute('SELECT DATABASE() AS db;');
-    res.json(rows);
-  } catch (err) {
-    console.error("DBTEST ERROR:", err);
-    res.status(500).json({ message: err.message, code: err.code });
-  }
-});
