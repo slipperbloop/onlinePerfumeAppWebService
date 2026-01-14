@@ -24,7 +24,7 @@ app.listen(port, () => {
 app.get('/allperfumes', async (req, res) => {
   try {
     let connection = await mysql.createConnection(dbConfig);
-    const [rows] = await connection.execute('SELECT * FROM defaultdb.perfumes');
+    const [rows] = await connection.execute('SELECT * FROM perfumes;');
     res.json(rows);
   } catch (err) {
     console.error(err);
@@ -44,7 +44,7 @@ app.post('/addperfume', async (req, res) => {
     let connection = await mysql.createConnection(dbConfig);
 
     await connection.execute(
-      'INSERT INTO defaultdb.perfumes (perfume_name, brand, price) VALUES (?, ?, ?)',
+      'INSERT INTO perfumes (perfume_name, brand, price) VALUES (?, ?, ?)',
       [perfume_name, brand, price ?? 0]
     );
 
@@ -67,7 +67,7 @@ app.put('/updateperfume', async (req, res) => {
     let connection = await mysql.createConnection(dbConfig);
 
     const [result] = await connection.execute(
-      `UPDATE defaultdb.perfumes
+      `UPDATE perfumes
        SET perfume_name = COALESCE(?, perfume_name),
            brand        = COALESCE(?, brand),
            price        = COALESCE(?, price)
@@ -98,7 +98,7 @@ app.delete('/deleteperfume', async (req, res) => {
     let connection = await mysql.createConnection(dbConfig);
 
     const [result] = await connection.execute(
-      'DELETE FROM defaultdb.perfumes WHERE id = ?;',
+      'DELETE FROM perfumes WHERE id = ?;',
       [id]
     );
 
