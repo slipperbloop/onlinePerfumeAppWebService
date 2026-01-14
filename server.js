@@ -29,10 +29,10 @@ app.listen(port, () => {
 app.get('/allperfumes', async (req, res) => {
   try {
     let connection = await mysql.createConnection(dbConfig);
-    const [rows] = await connection.execute('SELECT * FROM defaultdb.perfumes;');
+    const [rows] = await connection.execute('SELECT * FROM perfumes;');
     res.json(rows);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error for allperfumes' });
+        console.error(err);
+        res.status(500).json({ message: 'Server error for allperfumes' });
   }
 });
